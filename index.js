@@ -16,7 +16,6 @@ function stringify (obj, options) {
       obj.forEach(function (obj) {
         if ((typeof obj !== 'number') || (obj < 0) || (obj > 255)) {
           allBytes = false;
-          break;
         } else {
           tmp = obj.toString(16)
           if (tmp.length < 2) tmp = '0' + tmp;
