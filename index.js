@@ -10,6 +10,7 @@ function stringify (obj, options) {
     }
 
     var string;
+    var hexes = [];
     var tmp;
     if (Array.isArray(obj)) {
       var allBytes = true;
@@ -20,12 +21,12 @@ function stringify (obj, options) {
           tmp = obj.toString(16)
           if (tmp.length < 2) tmp = '0' + tmp;
           tmp = '0x' + tmp;
-          string += tmp;
+          hexes.push(tmp);
         }
       });
 
       if (allBytes) {
-        string = '[' + string + ']';
+        string = '[' + hexes.join(', ') + ']';
       } else {
         string = JSON.stringify(obj);
       }
