@@ -9,7 +9,30 @@ function stringify (obj, options) {
       obj = obj.toJSON()
     }
 
-    var string = JSON.stringify(obj)
+    var string;
+    var tmp;
+    if (Array.isArray(obj)) {
+      var allBytes = true;
+      obj.forEach(function (obj) {
+        if ((typeof obj !== 'number') || (obj < 0) || (obj > 255)) {
+          allBytes = false;
+          break;
+        } else {
+          tmp = obj.toString(16)
+          if (tmp.length < 2) tmp = '0' + tmp;
+          tmp = '0x' + tmp;
+          string += tmp;
+        }
+      });
+
+      if (allBytes) {
+        string = '[' + string + ']';
+      } else {
+        string = JSON.stringify(obj);
+      }
+    } else {
+      string = JSON.stringify(obj)
+    }
 
     if (string === undefined) {
       return string
