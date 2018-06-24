@@ -1,3 +1,9 @@
+function hex(n) {
+  var tmp = n.toString(16);
+  if (tmp.length < 2) tmp = '0' + tmp;
+  return '0x' + tmp;
+}
+
 function stringify (obj, options) {
   options = options || {}
   var indent = JSON.stringify([1], null, get(options, 'indent', 2)).slice(2, -3)
@@ -18,10 +24,7 @@ function stringify (obj, options) {
         if ((typeof el !== 'number') || (el < 0) || (el > 255)) {
           allBytes = false;
         } else {
-          tmp = el.toString(16)
-          if (tmp.length < 2) tmp = '0' + tmp;
-          tmp = '0x' + tmp;
-          hexes.push(tmp);
+          hexes.push(hex(el));
         }
       });
 
@@ -30,6 +33,8 @@ function stringify (obj, options) {
       } else {
         string = JSON.stringify(obj);
       }
+    } else if ((typeof obj === 'number') && (obj >= 0) && (obj <= 255)) {
+      string = hex(obj) + ' (' + obj + ')';
     } else {
       string = JSON.stringify(obj)
     }
