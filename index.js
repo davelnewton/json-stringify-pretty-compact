@@ -14,11 +14,11 @@ function stringify (obj, options) {
     var tmp;
     if (Array.isArray(obj)) {
       var allBytes = true;
-      obj.forEach(function (obj) {
-        if ((typeof obj !== 'number') || (obj < 0) || (obj > 255)) {
+      obj.forEach(function (el) {
+        if ((typeof el !== 'number') || (el < 0) || (el > 255)) {
           allBytes = false;
         } else {
-          tmp = obj.toString(16)
+          tmp = el.toString(16)
           if (tmp.length < 2) tmp = '0' + tmp;
           tmp = '0x' + tmp;
           hexes.push(tmp);
